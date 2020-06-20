@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Profile from './components/Profile';
+import Repositories from './components/Repositories';
 import 'antd/dist/antd.css';
 import './App.css';
 import axios from 'axios';
+import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import {
   UserOutlined,
@@ -111,11 +113,19 @@ class App extends Component {
         >
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '80px'}}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
-              Profile
+            <Menu.Item key="1" >
+              <Link to='/'>
+                {<UserOutlined />}
+                <span className="nav-text">Profile</span>
+                {/* Profile */}
+              </Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<CodeOutlined />}>
-              Repositories
+            <Menu.Item key="2" >
+              <Link to='/repo'>
+                {<CodeOutlined />}
+                <span className="nav-text">Repositories</span>
+                {/* Repositories */}
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -123,12 +133,27 @@ class App extends Component {
           <Header className="site-layout-background" style={{ padding: 0 }} />
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div className="site-layout-background" style={{ padding: 24 }}>
-              <Profile 
-                user_data={this.state.user_data}
-                events_data={this.state.events_data}
-                followers_data={this.state.followers_data}
-                following_data={this.state.following_data}
-              />
+              <Switch>
+                <Route
+                  exact
+                  path='/'
+                  render={()=> 
+                    <Profile 
+                      user_data={this.state.user_data}
+                      events_data={this.state.events_data}
+                      followers_data={this.state.followers_data}
+                      following_data={this.state.following_data}
+                    />
+                  }/>
+                  <Route
+                    exact
+                    path='/repo'
+                    render={()=> 
+                    <Repositories
+                      repo_data={this.state.repo_data}
+                    />
+                  }/>
+              </Switch>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
