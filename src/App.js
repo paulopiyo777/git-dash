@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+import 'antd/dist/antd.css';
 import './App.css';
-
 import axios from 'axios';
+import { Layout, Menu } from 'antd';
+import {
+  UserOutlined,
+  CodeOutlined,
+} from '@ant-design/icons';
+
+const { Header, Content, Footer, Sider } = Layout;
 
 class App extends Component {
   state = {
@@ -13,7 +19,7 @@ class App extends Component {
     following_data: [],
   }
 
-  // fetchData: search for other users on GitHub
+  // fetchData: extract user data from GitHub through axios commands
   fetchData(username) {
     // returns a promise
     axios.get(`https://api.github.com/users/${username}`)
@@ -95,9 +101,33 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-
-      </div>
+      <Layout>
+        <Sider
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+          }}
+        >
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '60px'}}>
+            <Menu.Item key="1" icon={<UserOutlined />}>
+              Profile
+            </Menu.Item>
+            <Menu.Item key="2" icon={<CodeOutlined />}>
+              Repositories
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout className={{ marginLeft: 200 }} style={{height:'100vh'}}>
+          <Header className="site-layout-background" style={{ padding: 0 }} />
+          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+            <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
+              content
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </Layout>
+      </Layout>
     )
   }
 }
