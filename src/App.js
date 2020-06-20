@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Profile from './components/Profile';
 import 'antd/dist/antd.css';
 import './App.css';
 import axios from 'axios';
@@ -109,7 +110,7 @@ class App extends Component {
           }}
         >
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '60px'}}>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '80px'}}>
             <Menu.Item key="1" icon={<UserOutlined />}>
               Profile
             </Menu.Item>
@@ -121,8 +122,13 @@ class App extends Component {
         <Layout className={{ marginLeft: 200 }} style={{height:'100vh'}}>
           <Header className="site-layout-background" style={{ padding: 0 }} />
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
-              content
+            <div className="site-layout-background" style={{ padding: 24 }}>
+              <Profile 
+                user_data={this.state.user_data}
+                events_data={this.state.events_data}
+                followers_data={this.state.followers_data}
+                following_data={this.state.following_data}
+              />
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
