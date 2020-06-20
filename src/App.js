@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import Profile from './components/Profile';
-import Repositories from './components/Repositories';
-import { Input } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
-import axios from 'axios';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
-import {
-  UserOutlined,
-  CodeOutlined,
-} from '@ant-design/icons';
+import axios from 'axios';  
+import { Layout } from 'antd';
+import SideMenu from './components/SideMenu';
+import SearchBox from './components/SearchBox';
+import Main from './components/Main';
 
 const { Header, Content, Footer, Sider } = Layout;
-const { Search } = Input;
 
 class App extends Component {
   state = {
@@ -107,66 +101,22 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Sider
-          style={{
-            overflow: 'auto',
-            height: '100vh',
-          }}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '60px'}}>
-            <Menu.Item key="1" >
-              <Link to='/'>
-                {<UserOutlined />}
-                <span className="nav-text">Profile</span>
-                {/* Profile */}
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2" >
-              <Link to='/repo'>
-                {<CodeOutlined />}
-                <span className="nav-text">Repositories</span>
-                {/* Repositories */}
-              </Link>
-            </Menu.Item>
-          </Menu>
+        <Sider style={{overflow: 'auto', height: '100vh',}}>
+          <SideMenu/>
         </Sider>
         <Layout className={{ marginLeft: 200 }} style={{height:'100vh'}}>
           <Header style={{ padding: 0, background: '#fff'}}>
-            <Search
-              style= {{
-                width: '300px',
-                marginLeft: '20px',
-                padding: '15px',
-              }}
-              placeholder="github username"
-              onSearch={value => this.fetchData(value)}
-              enterButton
-            />
+            <SearchBox fetchData={this.fetchData.bind(this)}/>
           </Header>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div className="site-layout-background" style={{ padding: 24 }}>
-              <Switch>
-                <Route
-                  exact
-                  path='/'
-                  render={()=> 
-                    <Profile 
-                      user_data={this.state.user_data}
-                      events_data={this.state.events_data}
-                      followers_data={this.state.followers_data}
-                      following_data={this.state.following_data}
-                    />
-                  }/>
-                  <Route
-                    exact
-                    path='/repo'
-                    render={()=> 
-                    <Repositories
-                      repo_data={this.state.repo_data}
-                    />
-                  }/>
-              </Switch>
+              <Main
+                user_data={this.state.user_data}
+                events_data={this.state.events_data}
+                followers_data={this.state.followers_data}
+                following_data={this.state.following_data}  
+                repo_data={this.state.repo_data}
+              />
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
