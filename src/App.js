@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Profile from './components/Profile';
 import Repositories from './components/Repositories';
+import { Input } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
 import axios from 'axios';
@@ -12,6 +13,7 @@ import {
 } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Search } = Input;
 
 class App extends Component {
   state = {
@@ -112,7 +114,7 @@ class App extends Component {
           }}
         >
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '80px'}}>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{marginTop: '60px'}}>
             <Menu.Item key="1" >
               <Link to='/'>
                 {<UserOutlined />}
@@ -130,7 +132,18 @@ class App extends Component {
           </Menu>
         </Sider>
         <Layout className={{ marginLeft: 200 }} style={{height:'100vh'}}>
-          <Header className="site-layout-background" style={{ padding: 0 }} />
+          <Header style={{ padding: 0, background: '#fff'}}>
+            <Search
+              style= {{
+                width: '300px',
+                marginLeft: '20px',
+                padding: '15px',
+              }}
+              placeholder="github username"
+              onSearch={value => this.fetchData(value)}
+              enterButton
+            />
+          </Header>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div className="site-layout-background" style={{ padding: 24 }}>
               <Switch>
